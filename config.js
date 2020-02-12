@@ -5,7 +5,11 @@ const configs = {
         user: 'root',
         password: '123456',
         database: 'huiCanon'
-    }
+    },
+    qiniu: {
+        accessKey: 'rbhLt4aIt5kq7zy3DiAHnUaNbidBHWZWp2yb2TEN',
+        secretKey: 'uU8MT50nXXpavZEk_JchqQl60bUSIJSEoYIq_w3n'
+    },
 }
 
 module.exports = configs
