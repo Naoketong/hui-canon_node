@@ -1,22 +1,23 @@
 const User = require('./../models/user.js');
+const vehicle = require('./../models/vehicle.js');
 const { formatTime } = require('./../utils/date.js');
 const userController = {
     insert: async function(req, res, next) {
-        let name = req.body.name;
+        let user_name = req.body.user_name;
         let phone = req.body.phone;
         let open_id = req.body.open_id;
         let car_id = req.body.car_id;
         // let password = req.body.password;
         let created_time = new Date();
         console.log(req.body)
-            // if (!name || !phone) {
+            // if (!user_name || !phone) {
             //     res.json({ code: 0, message: '缺少必要参数' });
             //     return
             // }
 
         try {
             const user = await User.insert({
-                name,
+                user_name,
                 phone,
                 open_id,
                 car_id,
@@ -56,21 +57,21 @@ const userController = {
         }
     },
     update: async function(req, res, next) {
-        let name = req.body.name;
+        let user_name = req.body.user_name;
         let phone = req.body.phone;
         let open_id = req.body.open_id;
         let car_id = req.body.car_id;
         let id = req.params.id;
         let created_time = new Date();
 
-        // if (!name || !phone || !password) {
+        // if (!user_name || !phone || !password) {
         //     res.json({ code: 0, message: '缺少必要参数' });
         //     return
         // }
 
         try {
             const user = await User.update(id, {
-                name,
+                user_name,
                 phone,
                 open_id,
                 car_id,
@@ -93,7 +94,7 @@ const userController = {
         let id = req.params.id;
         let isdeleted = 1;
         try {
-            const manager = await User.update(id, { isdeleted })
+            const user = await User.update(id, { isdeleted })
             res.json({
                 code: 200,
                 data: '删除成功'
@@ -103,6 +104,26 @@ const userController = {
             res.json({
                 code: 0,
                 message: '删除失败'
+            })
+        }
+    },
+    personal: async function(req, res, next) {
+        let id = req.params.id;
+        try {
+            const users = await User
+                .where({ car_id: id })
+                .leftJoin('vehicle', 'user.car_id', 'vehicle.id')
+                // .column('vehicle.id', 'vehicle.name', 'vehicle.state', 'vehicle.car_img')
+
+            res.json({
+                code: 200,
+                data: users
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
             })
         }
     },

@@ -15,6 +15,7 @@ router.get('/qiniu-uploadtoken', qiniuController.uploadToken);
 
 router.get('/user', userController.list);
 router.post('/user', userController.insert);
+router.get('/user/:id', userController.personal);
 router.put('/user/:id', userController.update);
 router.delete('/user/:id', userController.delete);
 

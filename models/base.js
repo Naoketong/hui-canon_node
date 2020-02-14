@@ -12,6 +12,12 @@ class Base {
     select(params) {
         return knex(this.table).select().where(params)
     }
+    show(params) {
+        return knex(this.table).where(params).select();
+    }
+    where(params) {
+        return knex(this.table).where(params);
+    }
 
     allManager() { /*获取所有信息 管理员*/
         return knex(this.table).select().whereNull('isdeleted')
