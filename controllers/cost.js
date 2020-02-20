@@ -36,15 +36,13 @@ const costController = {
         try {
             const cost = await Cost
                 .all()
+                .whereNull('cost.isdeleted')
                 .leftJoin('vehicle', 'cost.car_id', 'vehicle.id')
                 .column(
                     'cost.id', 'cost.cost_basis', 'cost.cost_lease', 'cost.car_id',
                     'cost.cost_servic', 'cost.cost_insurance', 'cost.cost_total',
                     'vehicle.name', 'vehicle.car_img'
                 )
-                // .whereNull('isdeleted')
-
-
             res.json({
                 code: 200,
                 data: cost
