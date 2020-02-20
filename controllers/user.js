@@ -3,21 +3,21 @@ const vehicle = require('./../models/vehicle.js');
 const { formatTime } = require('./../utils/date.js');
 const userController = {
     insert: async function(req, res, next) {
-        let user_name = req.body.user_name;
+        let name = req.body.name;
         let phone = req.body.phone;
         let open_id = req.body.open_id;
         let car_id = req.body.car_id;
         // let password = req.body.password;
         let created_time = new Date();
         console.log(req.body)
-            // if (!user_name || !phone) {
+            // if (!name || !phone) {
             //     res.json({ code: 0, message: '缺少必要参数' });
             //     return
             // }
 
         try {
             const user = await User.insert({
-                user_name,
+                name,
                 phone,
                 open_id,
                 car_id,
@@ -57,21 +57,21 @@ const userController = {
         }
     },
     update: async function(req, res, next) {
-        let user_name = req.body.user_name;
+        let name = req.body.name;
         let phone = req.body.phone;
         let open_id = req.body.open_id;
         let car_id = req.body.car_id;
         let id = req.params.id;
         let created_time = new Date();
 
-        // if (!user_name || !phone || !password) {
+        // if (!name || !phone || !password) {
         //     res.json({ code: 0, message: '缺少必要参数' });
         //     return
         // }
 
         try {
             const user = await User.update(id, {
-                user_name,
+                name,
                 phone,
                 open_id,
                 car_id,
@@ -109,9 +109,12 @@ const userController = {
     },
     personal: async function(req, res, next) {
         let id = req.params.id;
+        let user_id = id;
+        console.log(id, user_id)
         try {
+            const user = await User.update(id, { user_id })
             const users = await User
-                .where({ car_id: id })
+                .where({ user_id: id })
                 .leftJoin('vehicle', 'user.car_id', 'vehicle.id')
                 // .column('vehicle.id', 'vehicle.name', 'vehicle.state', 'vehicle.car_img')
 
