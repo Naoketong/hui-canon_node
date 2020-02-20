@@ -5,6 +5,7 @@ const qiniuController = require('./../controllers/api/qiniu');
 var userController = require('./../controllers/user');
 var admin_userController = require('./../controllers/admin_user');
 var vehicleController = require('./../controllers/vehicle');
+var costController = require('./../controllers/cost');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -28,5 +29,11 @@ router.get('/vehicle', vehicleController.list);
 router.post('/vehicle', vehicleController.insert);
 router.put('/vehicle/:id', vehicleController.update);
 router.delete('/vehicle/:id', vehicleController.delete);
+
+router.get('/cost', costController.list);
+router.post('/cost', costController.insert);
+// router.get('/cost/:id', costController.personal);
+router.put('/cost/:id', costController.update);
+router.delete('/cost/:id', costController.delete);
 
 module.exports = router;
