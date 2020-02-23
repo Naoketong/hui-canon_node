@@ -6,6 +6,7 @@ var userController = require('./../controllers/user');
 var admin_userController = require('./../controllers/admin_user');
 var vehicleController = require('./../controllers/vehicle');
 var costController = require('./../controllers/cost');
+var orderController = require('./../controllers/order');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -35,5 +36,11 @@ router.post('/cost', costController.insert);
 // router.get('/cost/:id', costController.personal);
 router.put('/cost/:id', costController.update);
 router.delete('/cost/:id', costController.delete);
+
+router.get('/order', orderController.list);
+router.post('/order', orderController.insert);
+router.get('/order/:id', orderController.personal);
+router.put('/order/:id', orderController.update);
+router.delete('/order/:id', orderController.delete);
 
 module.exports = router;

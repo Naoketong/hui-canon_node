@@ -33,6 +33,7 @@ const costController = {
         }
     },
     list: async function(req, res, next) {
+        console.log(123)
         try {
             const cost = await Cost
                 .all()
@@ -41,7 +42,7 @@ const costController = {
                 .column(
                     'cost.id', 'cost.cost_basis', 'cost.cost_lease', 'cost.car_id',
                     'cost.cost_servic', 'cost.cost_insurance', 'cost.cost_total',
-                    'vehicle.name', 'vehicle.car_img'
+                    'vehicle.car_name', 'vehicle.car_img'
                 )
             res.json({
                 code: 200,

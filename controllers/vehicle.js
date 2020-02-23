@@ -2,22 +2,20 @@ const Vehicle = require('./../models/vehicle.js');
 const { formatTime } = require('./../utils/date.js');
 const vehicleController = {
     insert: async function(req, res, next) {
-        let name = req.body.name;
-        let price = req.body.price;
+        let car_name = req.body.car_name;
         let state = req.body.state;
         let level = req.body.level;
         let car_img = req.body.car_img;
         let created_time = new Date();
         console.log(req.body)
-            // if (!name || !price) {
+            // if (!car_name || !) {
             //     res.json({ code: 0, message: '缺少必要参数' });
             //     return
             // }
 
         try {
             const vehicle = await Vehicle.insert({
-                name,
-                price,
+                car_name,
                 state,
                 level,
                 car_img,
@@ -56,23 +54,21 @@ const vehicleController = {
         }
     },
     update: async function(req, res, next) {
-        let name = req.body.name;
-        let price = req.body.price;
+        let car_name = req.body.car_name;
         let state = req.body.state;
         let level = req.body.level;
         let car_img = req.body.car_img;
         let id = req.params.id;
         let created_time = new Date();
 
-        // if (!name || !price || !car_img) {
+        // if (!car_name || ! || !car_img) {
         //     res.json({ code: 0, message: '缺少必要参数' });
         //     return
         // }
 
         try {
             const vehicle = await Vehicle.update(id, {
-                name,
-                price,
+                car_name,
                 state,
                 level,
                 car_img,
