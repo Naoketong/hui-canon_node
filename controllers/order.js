@@ -142,16 +142,21 @@ const orderController = {
         let order_id = id;
         // console.log(id, user_id)
         try {
-            const order = await Order.update(id, { order_id })
-            const orders = await Order
+            const orderID = await Order.update(id, { order_id })
+            const order = await Order
                 .select({ order_id: id })
                 .whereNull('order.isdeleted')
                 .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
                 // .column(
-                //     'order.id', 'order.order_basis', 'order.order_lease', 'order.car_id',
-                //     'order.order_servic', 'order.order_insurance', 'order.order_total',
+                //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                //     'order.sat_at', 'order.end_at', 'order.rent_days','order.guest_name',
+                //     'order.phone',
                 //     'vehicle.car_name', 'vehicle.car_img'
                 // )
+            let orders = order.map((data) => {
+                data.order_date = formatTime(data.order_date);
+                return data
+            });
 
             res.json({
                 code: 200,
