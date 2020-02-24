@@ -33,7 +33,7 @@ router.delete('/vehicle/:id', vehicleController.delete);
 
 router.get('/cost', costController.list);
 router.post('/cost', costController.insert);
-// router.get('/cost/:id', costController.personal);
+router.get('/cost/:id', costController.personal);
 router.put('/cost/:id', costController.update);
 router.delete('/cost/:id', costController.delete);
 

@@ -1,10 +1,9 @@
 const Order = require('./../models/order.js');
-const vehicle = require('./../models/vehicle.js');
+const Vehicle = require('./../models/vehicle.js');
+const Cost = require('./../models/cost.js');
 const { formatTime } = require('./../utils/date.js');
 const orderController = {
     insert: async function(req, res, next) {
-        // let order_number = req.body.order_number; //后端随机生成
-
         let order_number = ""; //订单号
         for (let i = 0; i < 6; i++) //6位随机数，用以加在时间戳后面。
         {
@@ -12,17 +11,15 @@ const orderController = {
         }
         order_number = new Date().getTime() + order_number; //时间戳，用来生成订单号。
 
-
-
-        let order_state = req.body.order_state;
+        let order_state = 1; //订单状态 1：进行中 2：已完成 3：已取消
         let order_date = new Date();
-        let sat_at = req.body.sat_at;
-        let end_at = req.body.end_at;
-        let rent_days = req.body.rent_days; //前端 计算
-        let guest_name = req.body.guest_name;
-        let phone = req.body.phone;
-        let open_id = req.body.open_id;
-        let car_id = req.body.car_id;
+        let sat_at = req.body.sat_at; //开始时间
+        let end_at = req.body.end_at; //结束时间
+        let rent_days = req.body.rent_days; //租借天数 计算
+        let guest_name = req.body.guest_name //客户名字
+        let phone = req.body.phone //客户电话
+        let open_id = req.body.open_id //客户ID
+        let car_id = req.body.car_id //车型ID
         let cost_total = req.body.cost_total; //前端计算好返回后端
 
         console.log(order_number, /*order_state, order_date, sat_at, end_at, rent_days, guest_name, phone, open_id, car_id, cost_total*/ )
@@ -142,18 +139,23 @@ const orderController = {
     },
     personal: async function(req, res, next) {
         let id = req.params.id;
-        // let user_id = id;
+        let order_id = id;
         // console.log(id, user_id)
         try {
-            // const user = await Order.update(id, { user_id })
-            const users = await Order.all()
-                // .where({ user_id: id })
-                // .leftJoin('vehicle', 'user.car_id', 'vehicle.id')
-                // .column('vehicle.id', 'vehicle.order_number', 'vehicle.state', 'vehicle.car_img')
+            const order = await Order.update(id, { order_id })
+            const orders = await Order
+                .select({ order_id: id })
+                .whereNull('order.isdeleted')
+                .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
+                // .column(
+                //     'order.id', 'order.order_basis', 'order.order_lease', 'order.car_id',
+                //     'order.order_servic', 'order.order_insurance', 'order.order_total',
+                //     'vehicle.car_name', 'vehicle.car_img'
+                // )
 
             res.json({
                 code: 200,
-                data: users
+                data: orders,
             })
         } catch (e) {
             console.log(e)

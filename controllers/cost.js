@@ -8,7 +8,7 @@ const costController = {
         let cost_lease = req.body.cost_lease;
         let cost_servic = req.body.cost_servic;
         let cost_insurance = req.body.cost_insurance;
-        let cost_total = Number(cost_basis) + Number(cost_lease) + Number(cost_servic) + Number(cost_insurance)
+        let cost_total = Number(cost_basis) + /*Number(cost_lease) +*/ Number(cost_servic) + Number(cost_insurance)
         try {
             const cost = await Cost.insert({
                 car_id,
@@ -63,7 +63,7 @@ const costController = {
         let cost_lease = req.body.cost_lease;
         let cost_servic = req.body.cost_servic;
         let cost_insurance = req.body.cost_insurance;
-        let cost_total = Number(cost_basis) + Number(cost_lease) + Number(cost_servic) + Number(cost_insurance)
+        let cost_total = Number(cost_basis) + /*Number(cost_lease) +*/ Number(cost_servic) + Number(cost_insurance)
         try {
             const cost = await Cost.update(id, {
                 car_id,
@@ -100,6 +100,25 @@ const costController = {
             res.json({
                 code: 0,
                 message: '删除失败'
+            })
+        }
+    },
+    personal: async function(req, res, next) {
+        let car_id = req.params.id;
+        // let car_id = id;
+        try {
+            const cost = await Cost.select({ car_id })
+
+
+            res.json({
+                code: 200,
+                data: cost
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
             })
         }
     },
