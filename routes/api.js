@@ -12,6 +12,7 @@ var orderController = require('./../controllers/order');
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
+
 router.get('/qiniu-uploadtoken', qiniuController.uploadToken);
 
 
@@ -21,6 +22,7 @@ router.get('/user/:id', userController.personal);
 router.put('/user/:id', userController.update);
 router.delete('/user/:id', userController.delete);
 
+router.post('/login', admin_userController.login);
 router.get('/admin_user', admin_userController.list);
 router.post('/admin_user', admin_userController.insert);
 router.put('/admin_user/:id', admin_userController.update);
