@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-const qiniuController = require('./../controllers/api/qiniu');
+var qiniuController = require('./../controllers/api/qiniu');
 
 var userController = require('./../controllers/user');
 var admin_userController = require('./../controllers/admin_user');
 var vehicleController = require('./../controllers/vehicle');
 var costController = require('./../controllers/cost');
 var orderController = require('./../controllers/order');
-
+var miniController = require('./../controllers/miniController.js');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
@@ -45,4 +45,9 @@ router.get('/order/:id', orderController.personal);
 router.put('/order/:id', orderController.update);
 router.delete('/order/:id', orderController.delete);
 
+
+//小程序
+router.post('/miniprogram/wxbind', miniController.wxbind);
+
+router.post('/miniprogram/wxlogin', miniController.wxlogin);
 module.exports = router;
