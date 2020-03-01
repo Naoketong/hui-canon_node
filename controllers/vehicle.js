@@ -6,12 +6,14 @@ const vehicleController = {
         let state = req.body.state;
         let level = req.body.level;
         let car_img = req.body.car_img;
+        let price = req.body.price;
         let created_time = new Date();
-        console.log(req.body)
-            // if (!car_name || !) {
-            //     res.json({ code: 0, message: '缺少必要参数' });
-            //     return
-            // }
+        let car_displacement = req.body.car_displacement;
+        let car_structure = req.body.car_structure;
+        // if (!car_name || !) {
+        //     res.json({ code: 0, message: '缺少必要参数' });
+        //     return
+        // }
 
         try {
             const vehicle = await Vehicle.insert({
@@ -19,7 +21,10 @@ const vehicleController = {
                 state,
                 level,
                 car_img,
-                created_time
+                price,
+                created_time,
+                car_displacement,
+                car_structure,
             });
             let id = vehicle[0];
             res.json({
@@ -54,12 +59,15 @@ const vehicleController = {
         }
     },
     update: async function(req, res, next) {
+        let id = req.params.id;
         let car_name = req.body.car_name;
         let state = req.body.state;
         let level = req.body.level;
         let car_img = req.body.car_img;
-        let id = req.params.id;
+        let price = req.body.price;
         let created_time = new Date();
+        let car_displacement = req.body.car_displacement;
+        let car_structure = req.body.car_structure;
 
         // if (!car_name || ! || !car_img) {
         //     res.json({ code: 0, message: '缺少必要参数' });
@@ -72,7 +80,10 @@ const vehicleController = {
                 state,
                 level,
                 car_img,
-                created_time
+                price,
+                created_time,
+                car_displacement,
+                car_structure,
             });
             res.json({
                 code: 200,
@@ -106,7 +117,6 @@ const vehicleController = {
     },
     level: async function(req, res, next) {
         let level = req.body.level;
-        console.log(level)
         try {
             const vehicles = await Vehicle.select({ level })
             const vehiclesDisplay = vehicles.map((data) => {
