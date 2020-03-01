@@ -104,6 +104,27 @@ const vehicleController = {
             })
         }
     },
+    level: async function(req, res, next) {
+        let level = req.body.level;
+        console.log(level)
+        try {
+            const vehicles = await Vehicle.select({ level })
+            const vehiclesDisplay = vehicles.map((data) => {
+                data.created_time_display = formatTime(data.created_time);
+                return data
+            });
+            res.json({
+                code: 200,
+                data: vehiclesDisplay
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
+            })
+        }
+    },
 }
 
 module.exports = vehicleController;

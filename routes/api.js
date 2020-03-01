@@ -29,6 +29,7 @@ router.put('/admin_user/:id', admin_userController.update);
 router.delete('/admin_user/:id', admin_userController.delete);
 
 router.get('/vehicle', vehicleController.list);
+router.get('/vehicle/level', vehicleController.level);
 router.post('/vehicle', vehicleController.insert);
 router.put('/vehicle/:id', vehicleController.update);
 router.delete('/vehicle/:id', vehicleController.delete);

@@ -8,6 +8,9 @@ class Base {
     all() {
         return knex(this.table).select()
     }
+    als(params) {
+        return knex(this.table).select(params)
+    }
 
     select(params) {
         return knex(this.table).select().where(params)
@@ -23,9 +26,9 @@ class Base {
         return knex(this.table).select().whereNull('isdeleted')
     }
 
-    alls() {
-        return knex(this.table).where().whereNull('isdeleted').select()
-    }
+    // alls() {
+    //     return knex(this.table).where().whereNull('isdeleted').select()
+    // }
 
     insert(params) {
         return knex(this.table).insert(params)
