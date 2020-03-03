@@ -31,6 +31,7 @@ router.delete('/admin_user/:id', admin_userController.delete);
 router.get('/vehicle', vehicleController.list);
 router.post('/vehicle/level', vehicleController.level);
 router.post('/vehicle', vehicleController.insert);
+router.get('/vehicle/:id', vehicleController.personal);
 router.put('/vehicle/:id', vehicleController.update);
 router.delete('/vehicle/:id', vehicleController.delete);
 

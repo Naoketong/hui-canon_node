@@ -115,6 +115,28 @@ const vehicleController = {
             })
         }
     },
+    personal: async function(req, res, next) {
+
+        let id = req.params.id;
+        console.log(id)
+        try {
+            const vehicles = await Vehicle.allManager().where({ id });
+            const vehiclesDisplay = vehicles.map((data) => {
+                data.created_time_display = formatTime(data.created_time);
+                return data
+            });
+            res.json({
+                code: 200,
+                data: vehiclesDisplay
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
+            })
+        }
+    },
     level: async function(req, res, next) {
         let level = req.body.level;
         try {
