@@ -4,27 +4,28 @@ const Cost = require('./../models/cost.js');
 const { formatTime } = require('./../utils/date.js');
 const orderController = {
     insert: async function(req, res, next) {
-        let order_number = ""; //订单号
-        for (let i = 0; i < 6; i++) //6位随机数，用以加在时间戳后面。
-        {
-            order_number += Math.floor(Math.random() * 10);
-        }
-        order_number = new Date().getTime() + order_number; //时间戳，用来生成订单号。
+        // let order_number = ""; //订单号
+        // for (let i = 0; i < 6; i++) //6位随机数，用以加在时间戳后面。
+        // {
+        //     order_number += Math.floor(Math.random() * 10);
+        // }
+        // order_number = new Date().getTime() + order_number; //时间戳，用来生成订单号。
+        let order_number = req.body.order_number
 
         let order_state = 1; //订单状态 1：进行中 2：已完成 3：已取消
         let order_date = new Date();
         let sat_at = req.body.sat_at; //开始时间
         let end_at = req.body.end_at; //结束时间
         let rent_days = req.body.rent_days; //租借天数 计算
-        let guest_name = req.body.guest_name //客户名字
+        let name = req.body.name //客户名字
         let phone = req.body.phone //客户电话
         let open_id = req.body.open_id //客户ID
         let car_id = req.body.car_id //车型ID
         let cost_total = req.body.cost_total; //前端计算好返回后端
 
-        console.log(order_number, /*order_state, order_date, sat_at, end_at, rent_days, guest_name, phone, open_id, car_id, cost_total*/ )
+        console.log(order_number, /*order_state, order_date, sat_at, end_at, rent_days, name, phone, open_id, car_id, cost_total*/ )
             // if (!order_number || !order_state || !order_date ||
-            //     !sat_at || !end_at || !rent_days || !guest_name ||
+            //     !sat_at || !end_at || !rent_days || !name ||
             //     !phone || !open_id || !car_id || !cost_total) {
             //     res.json({ code: 0, message: '缺少必要参数' });
             //     return
@@ -39,7 +40,7 @@ const orderController = {
                 sat_at,
                 end_at,
                 rent_days,
-                guest_name,
+                name,
                 phone,
                 open_id,
                 car_id,
@@ -84,7 +85,7 @@ const orderController = {
         let sat_at = req.body.sat_at;
         let end_at = req.body.end_at;
         let rent_days = req.body.rent_days; //前端 计算
-        let guest_name = req.body.guest_name;
+        let name = req.body.name;
         let phone = req.body.phone;
         let open_id = req.body.open_id;
         let car_id = req.body.car_id;
@@ -100,7 +101,7 @@ const orderController = {
                 sat_at,
                 end_at,
                 rent_days,
-                guest_name,
+                name,
                 phone,
                 open_id,
                 car_id,
@@ -137,6 +138,25 @@ const orderController = {
             })
         }
     },
+    modify: async function(req, res, next) {
+        // console.log(576)
+        let order_number = req.params.id;
+        let order_state = req.body.order_state;
+        console.log(order_number, order_state)
+        try {
+            const user = await Order.modify(order_number, { order_state })
+            res.json({
+                code: 200,
+                data: '修改成功'
+            })
+        } catch (err) {
+            console.log(err)
+            res.json({
+                code: 0,
+                message: '修改失败'
+            })
+        }
+    },
     personal: async function(req, res, next) {
         let id = req.params.id;
         let order_id = id;
@@ -149,7 +169,39 @@ const orderController = {
                 .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
                 // .column(
                 //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
-                //     'order.sat_at', 'order.end_at', 'order.rent_days','order.guest_name',
+                //     'order.sat_at', 'order.end_at', 'order.rent_days','order.name',
+                //     'order.phone',
+                //     'vehicle.car_name', 'vehicle.car_img'
+                // )
+            let orders = order.map((data) => {
+                data.order_date = formatTime(data.order_date);
+                return data
+            });
+
+            res.json({
+                code: 200,
+                data: orders,
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
+            })
+        }
+    },
+    find: async function(req, res, next) {
+        console.log(145)
+        let order_number = req.params.id;
+        console.log(order_number, '订单号')
+        try {
+            const order = await Order
+                .select({ order_number })
+                .whereNull('order.isdeleted')
+                .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
+                // .column(
+                //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                //     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name',
                 //     'order.phone',
                 //     'vehicle.car_name', 'vehicle.car_img'
                 // )

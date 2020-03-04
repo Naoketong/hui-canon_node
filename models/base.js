@@ -37,6 +37,9 @@ class Base {
     update(id, params) {
         return knex(this.table).where('id', '=', id).update(params)
     }
+    modify(order_number, params) { //修改订单
+        return knex(this.table).where('order_number', '=', order_number).update(params)
+    }
 
     delete(id) {
         return knex(this.table).where('id', '=', id).del()

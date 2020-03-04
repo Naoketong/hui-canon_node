@@ -1,27 +1,23 @@
+const weixinModel = require('./../models/wexin.js');
+const authCode = require('./../utils/authCode.js');
 const User = require('./../models/user.js');
 const vehicle = require('./../models/vehicle.js');
 const { formatTime } = require('./../utils/date.js');
 const userController = {
     insert: async function(req, res, next) {
-        let guest_name = req.body.guest_name;
+        let name = req.body.name;
         let phone = req.body.phone;
-        let open_id = req.body.open_id;
-        let car_id = req.body.car_id;
-        // let password = req.body.password;
         let created_time = new Date();
         console.log(req.body)
-            // if (!guest_name || !phone) {
+            // if (!name || !phone) {
             //     res.json({ code: 0, message: '缺少必要参数' });
             //     return
             // }
 
         try {
             const user = await User.insert({
-                guest_name,
+                name,
                 phone,
-                open_id,
-                car_id,
-                // password,
                 created_time
             });
             let id = user[0];
@@ -37,6 +33,7 @@ const userController = {
             })
         }
     },
+
     list: async function(req, res, next) {
         try {
             const users = await User.allManager();
@@ -57,21 +54,21 @@ const userController = {
         }
     },
     update: async function(req, res, next) {
-        let guest_name = req.body.guest_name;
+        let name = req.body.name;
         let phone = req.body.phone;
         let open_id = req.body.open_id;
         let car_id = req.body.car_id;
         let id = req.params.id;
         let created_time = new Date();
 
-        // if (!guest_name || !phone || !password) {
+        // if (!name || !phone || !password) {
         //     res.json({ code: 0, message: '缺少必要参数' });
         //     return
         // }
 
         try {
             const user = await User.update(id, {
-                guest_name,
+                name,
                 phone,
                 open_id,
                 car_id,
@@ -116,7 +113,7 @@ const userController = {
             const users = await User
                 .where({ user_id: id })
                 .leftJoin('vehicle', 'user.car_id', 'vehicle.id')
-                // .column('vehicle.id', 'vehicle.guest_name', 'vehicle.state', 'vehicle.car_img')
+                // .column('vehicle.id', 'vehicle.name', 'vehicle.state', 'vehicle.car_img')
 
             res.json({
                 code: 200,
