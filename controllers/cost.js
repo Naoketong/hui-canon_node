@@ -5,7 +5,7 @@ const costController = {
     insert: async function(req, res, next) {
         let car_id = req.body.car_id;
         let cost_basis = req.body.cost_basis;
-        let cost_lease = req.body.cost_lease;
+        // let cost_lease = req.body.cost_lease;
         let cost_servic = req.body.cost_servic;
         let cost_insurance = req.body.cost_insurance;
         let cost_total = Number(cost_basis) + /*Number(cost_lease) +*/ Number(cost_servic) + Number(cost_insurance)
@@ -13,7 +13,7 @@ const costController = {
             const cost = await Cost.insert({
                 car_id,
                 cost_basis,
-                cost_lease,
+                // cost_lease,
                 cost_servic,
                 cost_insurance,
                 cost_total
@@ -40,7 +40,7 @@ const costController = {
                 .whereNull('cost.isdeleted')
                 .leftJoin('vehicle', 'cost.car_id', 'vehicle.id')
                 .column(
-                    'cost.id', 'cost.cost_basis', 'cost.cost_lease', 'cost.car_id',
+                    'cost.id', 'cost.cost_basis', 'cost.car_id',
                     'cost.cost_servic', 'cost.cost_insurance', 'cost.cost_total',
                     'vehicle.car_name', 'vehicle.car_img'
                 )
@@ -68,7 +68,7 @@ const costController = {
             const cost = await Cost.update(id, {
                 car_id,
                 cost_basis,
-                cost_lease,
+                // cost_lease,
                 cost_servic,
                 cost_insurance,
                 cost_total

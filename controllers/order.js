@@ -92,8 +92,6 @@ const orderController = {
         let cost_total = req.body.cost_total; //前端计算好返回后端
 
 
-
-
         try {
             const order = await Order.update(id, {
                 order_state,
@@ -120,7 +118,6 @@ const orderController = {
             })
         }
     },
-
     delete: async function(req, res, next) {
         let id = req.params.id;
         let isdeleted = 1;
@@ -160,7 +157,6 @@ const orderController = {
     personal: async function(req, res, next) {
         let id = req.params.id;
         let order_id = id;
-        // console.log(id, user_id)
         try {
             const orderID = await Order.update(id, { order_id })
             const order = await Order
@@ -191,12 +187,42 @@ const orderController = {
         }
     },
     find: async function(req, res, next) {
-        console.log(145)
         let order_number = req.params.id;
         console.log(order_number, '订单号')
         try {
             const order = await Order
                 .select({ order_number })
+                .whereNull('order.isdeleted')
+                .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
+                // .column(
+                //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                //     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name',
+                //     'order.phone',
+                //     'vehicle.car_name', 'vehicle.car_img'
+                // )
+            let orders = order.map((data) => {
+                data.order_date = formatTime(data.order_date);
+                return data
+            });
+
+            res.json({
+                code: 200,
+                data: orders,
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
+            })
+        }
+    },
+    phone: async function(req, res, next) {
+        let phone = req.params.id;
+        // console.log(phone, '订单号')
+        try {
+            const order = await Order
+                .select({ phone })
                 .whereNull('order.isdeleted')
                 .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
                 // .column(

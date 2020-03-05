@@ -44,6 +44,7 @@ router.delete('/cost/:id', costController.delete);
 router.get('/order', orderController.list);
 router.post('/order', orderController.insert);
 router.get('/order/find/:id', orderController.find);
+router.get('/order/phone/:id', orderController.phone);
 
 router.get('/order/:id', orderController.personal);
 router.put('/order/modify/:id', orderController.modify); //订单进行、完成、取消
