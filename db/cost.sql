@@ -1,0 +1,13 @@
+INSERT INTO `cost` VALUES (1, 1, '100', '55', '31', '186', NULL);
+INSERT INTO `cost` VALUES (2, 2, '112', '23', '39', '195', NULL);
+INSERT INTO `cost` VALUES (3, 3, '122', '55', '77', '288', NULL);
+INSERT INTO `cost` VALUES (4, 4, '30', '50', '30', '110', NULL);
+INSERT INTO `cost` VALUES (5, 5, '40', '20', '20', '80', NULL);
+INSERT INTO `cost` VALUES (6, 6, '30', '39', '41', '110', NULL);
+INSERT INTO `cost` VALUES (7, 8, '43', '66', '30', '139', NULL);
+INSERT INTO `cost` VALUES (8, 9, '20', '30', '30', '80', NULL);
+INSERT INTO `cost` VALUES (9, 10, '25', '33', '32', '90', NULL);
+INSERT INTO `cost` VALUES (10, 11, '34', '41', '40', '115', NULL);
+INSERT INTO `cost` VALUES (11, 12, '20', '30', '20', '70', NULL);
+INSERT INTO `cost` VALUES (12, 13, '200', '80', '300', '580', NULL);
+INSERT INTO `cost` VALUES (13, 14, '40', '43', '49', '132', NULL);
