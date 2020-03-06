@@ -44,9 +44,10 @@ const userController = {
                 phone,
                 password,
             });
+            let id = user[0];
             res.json({
                 code: 200,
-                data: user
+                data: { id }
             })
         } catch (e) {
             console.log(e)
