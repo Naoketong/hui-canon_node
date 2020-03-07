@@ -60,15 +60,31 @@ const orderController = {
         }
     },
     list: async function(req, res, next) {
+        let pageSize = req.query.page_size || 10;
+        let currentPage = req.query.current_page || 1;
+        let params = {};
         try {
-            const order = await Order.allManager();
+            const order = await Order
+                // .allManager();
+                .pagination(pageSize, currentPage, params)
+                .orderBy('id', 'desc');
             const orderDisplay = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
                 return data
             });
+            let orderCount = await Order.count(params);
+
+            let total = orderCount[0].total;
             res.json({
                 code: 200,
-                data: orderDisplay
+                data: {
+                    datas: orderDisplay,
+                    pagination: {
+                        total: total,
+                        current_page: currentPage,
+                        page_size: pageSize,
+                    }
+                }
             })
         } catch (e) {
             console.log(e)
@@ -76,6 +92,40 @@ const orderController = {
                 code: 0,
                 message: '内部错误'
             })
+        }
+    },
+    show: async function(req, res, next) {
+        let name = req.query.name;
+        let phone = req.query.phone;
+        let pageSize = req.query.page_size || 20;
+        let currentPage = req.query.current_page || 1;
+        let params = {};
+        if (name) params.name = name;
+        if (phone) params.phone = phone;
+        try {
+            let users = await UserModel
+                .pagination(pageSize, currentPage, params)
+                .orderBy('id', 'desc');
+            let usersCount = await UserModel.count(params);
+            // users.forEach(data=>{
+            // 	data.birthday = formatDate(data.birthday)
+            // })
+            let total = usersCount[0].total;
+            res.json({
+                code: 200,
+                messsage: '获取成功',
+                data: {
+                    datas: users,
+                    pagination: {
+                        total: total,
+                        current_page: currentPage,
+                        page_size: pageSize,
+                    }
+                }
+            })
+        } catch (err) {
+            console.log(err)
+            res.json({ code: 0, messsage: '服务器错误' });
         }
     },
     update: async function(req, res, next) {
@@ -163,12 +213,12 @@ const orderController = {
                 .select({ order_id: id })
                 .whereNull('order.isdeleted')
                 .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
-                // .column(
-                //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
-                //     'order.sat_at', 'order.end_at', 'order.rent_days','order.name',
-                //     'order.phone',
-                //     'vehicle.car_name', 'vehicle.car_img'
-                // )
+                .column(
+                    'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                    'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name', 'order.car_id',
+                    'order.phone', 'order.cost_total',
+                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
+                )
             let orders = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
                 return data
@@ -219,7 +269,8 @@ const orderController = {
     },
     phone: async function(req, res, next) {
         let phone = req.params.id;
-        // console.log(phone, '订单号')
+        console.log(phone)
+            // console.log(phone, '订单号')
         try {
             const order = await Order
                 .select({ phone })

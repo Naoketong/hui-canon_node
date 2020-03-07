@@ -40,15 +40,28 @@ const vehicleController = {
         }
     },
     list: async function(req, res, next) {
+        let pageSize = req.query.page_size || 10;
+        let currentPage = req.query.current_page || 1;
+        let params = {}
         try {
-            const vehicles = await Vehicle.allManager();
+            const vehicles = await Vehicle
+                .pagination(pageSize, currentPage, params)
             const vehiclesDisplay = vehicles.map((data) => {
                 data.created_time_display = formatTime(data.created_time);
                 return data
             });
+            let vehicleCount = await Vehicle.count(params);
+            let total = vehicleCount[0].total;
             res.json({
                 code: 200,
-                data: vehiclesDisplay
+                data: {
+                    datas: vehiclesDisplay,
+                    pagination: {
+                        total: total,
+                        current_page: currentPage,
+                        page_size: pageSize,
+                    }
+                }
             })
         } catch (e) {
             console.log(e)
@@ -58,6 +71,7 @@ const vehicleController = {
             })
         }
     },
+
     update: async function(req, res, next) {
         let id = req.params.id;
         let car_name = req.body.car_name;

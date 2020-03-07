@@ -8,9 +8,6 @@ class Base {
     all() {
         return knex(this.table).select()
     }
-    als(params) {
-        return knex(this.table).select(params)
-    }
 
     select(params) {
         return knex(this.table).select().where(params)
@@ -43,6 +40,15 @@ class Base {
 
     delete(id) {
         return knex(this.table).where('id', '=', id).del()
+    }
+    count(params, dateFilter = {}) {
+        if (dateFilter.column) {
+            return knex(this.table).where(params)
+                .whereBetween(dateFilter.column, [`${dateFilter.startAt} 00:00`, `${dateFilter.endAt} 23:59`])
+                .count('id as total');
+        } else {
+            return knex(this.table).where(params).count('id as total');
+        }
     }
 
 
