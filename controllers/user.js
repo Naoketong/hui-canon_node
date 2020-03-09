@@ -33,7 +33,6 @@ const userController = {
             })
         }
     },
-
     list: async function(req, res, next) {
         try {
             const users = await User.allManager();

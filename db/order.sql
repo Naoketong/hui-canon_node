@@ -31,7 +31,6 @@ CREATE TABLE `order` (
   `rent_days` varchar(255) DEFAULT NULL COMMENT '租借天数',
   `name` varchar(255) DEFAULT NULL COMMENT '客户名字',
   `phone` varchar(255) DEFAULT NULL COMMENT '客户电话',
-  `open_id` varchar(255) DEFAULT NULL COMMENT '微信ID',
   `car_id` int(5) DEFAULT NULL COMMENT '车型信息 ',
   `cost_total` varchar(255) DEFAULT NULL COMMENT '总费用',
   `isdeleted` int(3) DEFAULT NULL,

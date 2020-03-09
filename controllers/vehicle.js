@@ -46,6 +46,7 @@ const vehicleController = {
         try {
             const vehicles = await Vehicle
                 .pagination(pageSize, currentPage, params)
+
             const vehiclesDisplay = vehicles.map((data) => {
                 data.created_time_display = formatTime(data.created_time);
                 return data

@@ -13,20 +13,20 @@ const orderController = {
         let order_number = req.body.order_number
 
         let order_state = 1; //订单状态 1：进行中 2：已完成 3：已取消
+        let get_car = 1;
         let order_date = new Date();
         let sat_at = req.body.sat_at; //开始时间
         let end_at = req.body.end_at; //结束时间
         let rent_days = req.body.rent_days; //租借天数 计算
         let name = req.body.name //客户名字
         let phone = req.body.phone //客户电话
-        let open_id = req.body.open_id //客户ID
         let car_id = req.body.car_id //车型ID
         let cost_total = req.body.cost_total; //前端计算好返回后端
 
-        console.log(order_number, /*order_state, order_date, sat_at, end_at, rent_days, name, phone, open_id, car_id, cost_total*/ )
+        console.log(order_number, /*order_state, order_date, sat_at, end_at, rent_days, name, phone, car_id, cost_total*/ )
             // if (!order_number || !order_state || !order_date ||
             //     !sat_at || !end_at || !rent_days || !name ||
-            //     !phone || !open_id || !car_id || !cost_total) {
+            //     !phone ||  !car_id || !cost_total) {
             //     res.json({ code: 0, message: '缺少必要参数' });
             //     return
             // }
@@ -37,12 +37,12 @@ const orderController = {
                 order_number,
                 order_state,
                 order_date,
+                get_car,
                 sat_at,
                 end_at,
                 rent_days,
                 name,
                 phone,
-                open_id,
                 car_id,
                 cost_total,
             });
@@ -137,7 +137,6 @@ const orderController = {
         let rent_days = req.body.rent_days; //前端 计算
         let name = req.body.name;
         let phone = req.body.phone;
-        let open_id = req.body.open_id;
         let car_id = req.body.car_id;
         let cost_total = req.body.cost_total; //前端计算好返回后端
 
@@ -151,7 +150,6 @@ const orderController = {
                 rent_days,
                 name,
                 phone,
-                open_id,
                 car_id,
                 cost_total,
             });
@@ -189,9 +187,10 @@ const orderController = {
         // console.log(576)
         let order_number = req.params.id;
         let order_state = req.body.order_state;
+        let get_car = req.body.get_car;
         console.log(order_number, order_state)
         try {
-            const user = await Order.modify(order_number, { order_state })
+            const user = await Order.modify(order_number, { order_state, get_car })
             res.json({
                 code: 200,
                 data: '修改成功'
@@ -216,7 +215,7 @@ const orderController = {
                 .column(
                     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
                     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name', 'order.car_id',
-                    'order.phone', 'order.cost_total',
+                    'order.phone', 'order.cost_total', 'get_car',
                     'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
                 )
             let orders = order.map((data) => {
@@ -244,12 +243,12 @@ const orderController = {
                 .select({ order_number })
                 .whereNull('order.isdeleted')
                 .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
-                // .column(
-                //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
-                //     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name',
-                //     'order.phone',
-                //     'vehicle.car_name', 'vehicle.car_img'
-                // )
+                .column(
+                    'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                    'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name', 'order.car_id',
+                    'order.phone', 'order.cost_total', 'get_car',
+                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
+                )
             let orders = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
                 return data
