@@ -22,17 +22,20 @@ const orderController = {
         let phone = req.body.phone //客户电话
         let car_id = req.body.car_id //车型ID
         let cost_total = req.body.cost_total; //前端计算好返回后端
+        // console.log(order_number, order_state, order_date, sat_at, end_at, rent_days, name, phone, car_id, cost_total)
+        // if (!order_number || !order_state || !order_date ||
+        //     !sat_at || !end_at || !rent_days || !name ||
+        //     !phone ||  !car_id || !cost_total) {
+        //     res.json({ code: 0, message: '缺少必要参数' });
+        //     return
+        // }
 
-        console.log(order_number, /*order_state, order_date, sat_at, end_at, rent_days, name, phone, car_id, cost_total*/ )
-            // if (!order_number || !order_state || !order_date ||
-            //     !sat_at || !end_at || !rent_days || !name ||
-            //     !phone ||  !car_id || !cost_total) {
-            //     res.json({ code: 0, message: '缺少必要参数' });
-            //     return
-            // }
-
+        let state = 1; //改变车辆状态
+        let id = car_id; //被改变车辆的ID
+        await Vehicle.update(id, { state })
 
         try {
+
             const order = await Order.insert({
                 order_number,
                 order_state,
@@ -139,6 +142,11 @@ const orderController = {
         let phone = req.body.phone;
         let car_id = req.body.car_id;
         let cost_total = req.body.cost_total; //前端计算好返回后端
+        if (car_id) {
+            let id = car_id;
+            let state = 1;
+            await Vehicle.update(id, { state })
+        }
 
 
         try {
@@ -188,6 +196,7 @@ const orderController = {
         let order_number = req.params.id;
         let order_state = req.body.order_state;
         let get_car = req.body.get_car;
+
         console.log(order_number, order_state)
         try {
             const user = await Order.modify(order_number, { order_state, get_car })

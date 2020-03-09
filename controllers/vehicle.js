@@ -46,15 +46,17 @@ const vehicleController = {
         try {
             const vehicles = await Vehicle
                 .pagination(pageSize, currentPage, params)
-
             const vehiclesDisplay = vehicles.map((data) => {
                 data.created_time_display = formatTime(data.created_time);
                 return data
             });
             let vehicleCount = await Vehicle.count(params);
             let total = vehicleCount[0].total;
+            let state = 0;
+            let vehicleData = await Vehicle.allManager().where({ state }) //能租的车型
             res.json({
                 code: 200,
+                vehicle: vehicleData,
                 data: {
                     datas: vehiclesDisplay,
                     pagination: {
@@ -154,8 +156,10 @@ const vehicleController = {
     },
     level: async function(req, res, next) {
         let level = req.body.level;
+        let state = 0;
+        console.log(state)
         try {
-            const vehicles = await Vehicle.select({ level })
+            const vehicles = await Vehicle.select({ level, state })
             const vehiclesDisplay = vehicles.map((data) => {
                 data.created_time_display = formatTime(data.created_time);
                 return data
