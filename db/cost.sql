@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 05/03/2020 20:42:06
+ Date: 10/03/2020 18:08:24
 */
 
 SET NAMES utf8mb4;
@@ -30,14 +30,14 @@ CREATE TABLE `cost` (
   `cost_total` varchar(255) DEFAULT NULL COMMENT '除租赁费以外总费用',
   `isdeleted` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of cost
 -- ----------------------------
 BEGIN;
 INSERT INTO `cost` VALUES (1, 1, '100', '55', '31', '186', NULL);
-INSERT INTO `cost` VALUES (2, 2, '112', '23', '39', '195', NULL);
+INSERT INTO `cost` VALUES (2, 2, '100', '20', '30', '150', NULL);
 INSERT INTO `cost` VALUES (3, 3, '122', '55', '77', '288', NULL);
 INSERT INTO `cost` VALUES (4, 4, '30', '50', '30', '110', NULL);
 INSERT INTO `cost` VALUES (5, 5, '40', '20', '20', '80', NULL);
@@ -49,6 +49,7 @@ INSERT INTO `cost` VALUES (10, 11, '34', '41', '40', '115', NULL);
 INSERT INTO `cost` VALUES (11, 12, '20', '30', '20', '70', NULL);
 INSERT INTO `cost` VALUES (12, 13, '200', '80', '300', '580', NULL);
 INSERT INTO `cost` VALUES (13, 14, '40', '43', '49', '132', NULL);
+INSERT INTO `cost` VALUES (14, 10, '23', '23', '23', '69', NULL);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

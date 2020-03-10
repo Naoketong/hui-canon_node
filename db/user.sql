@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 05/03/2020 20:42:29
+ Date: 10/03/2020 18:08:47
 */
 
 SET NAMES utf8mb4;
@@ -31,13 +31,16 @@ CREATE TABLE `user` (
   `isdeleted` int(3) DEFAULT NULL,
   `user_id` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, '董先生', '123', 'otlem5F8ZRlM8OY1qovPXVtvoAZ8', NULL, '2020-03-05 15:04:58', NULL, NULL);
+INSERT INTO `user` VALUES (1, '董先生', '13559876543', 'otlem5F8ZRlM8OY1qovPXVtvoAZ8', NULL, '2020-03-05 15:04:58', NULL, NULL);
+INSERT INTO `user` VALUES (2, '李老板', '13559876543', NULL, NULL, '2020-03-06 18:51:56', NULL, NULL);
+INSERT INTO `user` VALUES (3, '我都要', '13523456789', NULL, NULL, '2020-03-06 18:56:47', NULL, NULL);
+INSERT INTO `user` VALUES (4, '王晓敏', '123', NULL, NULL, '2020-03-07 14:32:01', NULL, NULL);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
