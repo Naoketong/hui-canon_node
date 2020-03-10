@@ -18,7 +18,10 @@ const costController = {
                 cost_insurance,
                 cost_total
             });
+            console.log(cost)
             let id = cost[0];
+
+
             res.json({
                 code: 200,
                 data: { id },
@@ -33,7 +36,6 @@ const costController = {
         }
     },
     list: async function(req, res, next) {
-        console.log(123)
         try {
             const cost = await Cost
                 .all()
