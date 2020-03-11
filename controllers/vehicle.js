@@ -1,7 +1,9 @@
 const Vehicle = require('./../models/vehicle.js');
+const Cost = require('./../models/cost.js');
 const { formatTime } = require('./../utils/date.js');
 const vehicleController = {
     insert: async function(req, res, next) {
+        // 车型信息
         let car_name = req.body.car_name;
         let state = req.body.state;
         let level = req.body.level;
@@ -10,11 +12,15 @@ const vehicleController = {
         let created_time = new Date();
         let car_displacement = req.body.car_displacement;
         let car_structure = req.body.car_structure;
-        // if (!car_name || !) {
-        //     res.json({ code: 0, message: '缺少必要参数' });
-        //     return
-        // }
-
+        // 费用信息
+        let cost_basis = req.body.cost_basis;
+        let cost_servic = req.body.cost_servic;
+        let cost_insurance = req.body.cost_insurance;
+        let cost_total = Number(cost_basis) + Number(cost_servic) + Number(cost_insurance)
+            // if (!car_name || !) {
+            //     res.json({ code: 0, message: '缺少必要参数' });
+            //     return
+            // }
         try {
             const vehicle = await Vehicle.insert({
                 car_name,
@@ -27,9 +33,52 @@ const vehicleController = {
                 car_structure,
             });
             let id = vehicle[0];
+            let car_id = id;
+            const cost = await Cost.insert({
+                car_id,
+                cost_basis,
+                cost_servic,
+                cost_insurance,
+                cost_total
+            });
+
+
+
+
             res.json({
                 code: 200,
-                data: { id }
+                data: { id },
+                vehicle: vehicle,
+                cost: cost,
+                message: '车型、费用添加成功',
+            })
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
+            })
+        }
+    },
+    cost: async function(req, res, next) {
+        let car_id = req.body.car_id;
+        let cost_basis = req.body.cost_basis;
+        let cost_servic = req.body.cost_servic;
+        let cost_insurance = req.body.cost_insurance;
+        let cost_total = Number(cost_basis) + Number(cost_servic) + Number(cost_insurance)
+        try {
+            const cost = await Cost.insert({
+                car_id,
+                cost_servic,
+                cost_insurance,
+                cost_total
+            });
+            console.log(cost)
+            let id = cost[0];
+            res.json({
+                code: 200,
+                data: { id },
+                message: '添加成功'
             })
         } catch (e) {
             console.log(e)
@@ -53,10 +102,10 @@ const vehicleController = {
             let vehicleCount = await Vehicle.count(params);
             let total = vehicleCount[0].total;
             let state = 0;
-            let vehicleData = await Vehicle.allManager().where({ state }) //能租的车型
+            let vehicleFree = await Vehicle.allManager().where({ state }) //能租的车型
             res.json({
                 code: 200,
-                vehicle: vehicleData,
+                vehicleFree: vehicleFree,
                 data: {
                     datas: vehiclesDisplay,
                     pagination: {
