@@ -56,4 +56,6 @@ router.delete('/order/:id', orderController.delete);
 router.post('/miniprogram/wxbind', weixinController.wxbind);
 
 router.post('/miniprogram/wxlogin', weixinController.wxlogin);
+router.post('/miniprogram/wxexit', weixinController.wxexit);
+
 module.exports = router;

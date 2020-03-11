@@ -39,13 +39,15 @@ const miniController = {
 
             await userModel.update(userInfo.id, { open_id });
             res.json({
-                ceshi: weixinData,
+                data: {
+                    open_id: open_id,
+                },
                 code: 200,
                 success: '绑定成功'
             });
         } catch (err) {
             console.log(err)
-            res.json({ code: 0, message: '绑定失败' })
+            res.json({ code: 0, message: '绑定失败啊' })
         }
     },
     wxlogin: async function(req, res, next) {
@@ -81,6 +83,25 @@ const miniController = {
         } catch (err) {
             console.log(err)
             res.json({ code: 0, message: '登录失败' })
+        }
+    },
+    wxexit: async function(req, res, next) {
+
+        let open_id = req.body.open_id;
+        console.log(open_id)
+
+        try {
+            let user = await userModel
+                .select({ open_id })
+                .update({ open_id: null })
+            res.json({
+                data: user,
+                code: 200,
+                success: '你已退出'
+            });
+        } catch (err) {
+            console.log(err)
+            res.json({ code: 0, message: '退出失败' })
         }
     },
 
