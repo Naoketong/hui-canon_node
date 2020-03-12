@@ -7,6 +7,7 @@ const userController = {
     insert: async function(req, res, next) {
         let name = req.body.name;
         let phone = req.body.phone;
+        let code = req.body.code;
         let created_time = new Date();
         console.log(req.body)
             // if (!name || !phone) {
@@ -15,15 +16,23 @@ const userController = {
             // }
 
         try {
+            let weixinRequest = await weixinModel.login(code);
+            let weixinData = weixinRequest.data;
+            let open_id = weixinData.openid;
             const user = await User.insert({
                 name,
                 phone,
-                created_time
+                open_id,
+                created_time,
             });
             let id = user[0];
             res.json({
                 code: 200,
-                data: { id }
+                data: {
+                    id: id,
+                    open_id: open_id,
+
+                }
             })
         } catch (e) {
             console.log(e)
@@ -35,14 +44,20 @@ const userController = {
     },
     list: async function(req, res, next) {
         try {
-            const users = await User.allManager();
-            const usersDisplay = users.map((data) => {
-                data.created_time_display = formatTime(data.created_time);
-                return data
-            });
+            let open_id = ''
+
+            const userNo_openid = await User.allManager().whereNull('open_id');
+            const userON_open = await User.allManager().whereNotNull(' open_id ');
+            // const usersDisplay = users.map((data) => {
+            //     data.created_time_display = formatTime(data.created_time);
+            //     return data
+            // });
             res.json({
                 code: 200,
-                data: usersDisplay
+                data: {
+                    userON_open: userON_open,
+                    userNo_openid: userNo_openid,
+                },
             })
         } catch (e) {
             console.log(e)
