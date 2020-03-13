@@ -100,7 +100,6 @@ const userController = {
             })
         }
     },
-
     delete: async function(req, res, next) {
         let id = req.params.id;
         let isdeleted = 1;
@@ -126,7 +125,14 @@ const userController = {
             const user = await User.update(id, { user_id })
             const users = await User
                 .where({ user_id: id })
-                .leftJoin('vehicle', 'user.car_id', 'vehicle.id')
+                .leftJoin('order', 'user.name', 'order.name')
+                .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
+                .column(
+                    'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                    'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name', 'order.car_id',
+                    'order.phone', 'order.cost_total', 'get_car',
+                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
+                )
                 // .column('vehicle.id', 'vehicle.name', 'vehicle.state', 'vehicle.car_img')
 
             res.json({

@@ -284,12 +284,12 @@ const orderController = {
                 .select({ phone })
                 .whereNull('order.isdeleted')
                 .leftJoin('vehicle', 'order.car_id', 'vehicle.id')
-                // .column(
-                //     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
-                //     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name',
-                //     'order.phone',
-                //     'vehicle.car_name', 'vehicle.car_img'
-                // )
+                .column(
+                    'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
+                    'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name',
+                    'order.phone',
+                    'vehicle.car_name', 'vehicle.car_img'
+                )
             let orders = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
                 return data
