@@ -196,9 +196,17 @@ const orderController = {
         let order_number = req.params.id;
         let order_state = req.body.order_state;
         let get_car = req.body.get_car;
+        let id = req.body.car_id;
+        let state = 0; //改变车辆状态
+        console.log(order_state)
+        if (order_state == '2') {
+            await Vehicle.update(id, { state })
+        } else if (order_state == '3') {
+            await Vehicle.update(id, { state })
+        }
 
-        console.log(order_number, order_state)
         try {
+
             const user = await Order.modify(order_number, { order_state, get_car })
             res.json({
                 code: 200,
