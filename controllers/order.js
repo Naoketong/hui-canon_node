@@ -1,6 +1,7 @@
 const Order = require('./../models/order.js');
 const Vehicle = require('./../models/vehicle.js');
 const Cost = require('./../models/cost.js');
+const User = require('./../models/user.js');
 const { formatTime } = require('./../utils/date.js');
 const orderController = {
     insert: async function(req, res, next) {
@@ -15,6 +16,7 @@ const orderController = {
         let order_state = 1; //订单状态 1：进行中 2：已完成 3：已取消
         let get_car = 1;
         let order_date = new Date();
+        let created_time = order_date;
         let sat_at = req.body.sat_at; //开始时间
         let end_at = req.body.end_at; //结束时间
         let rent_days = req.body.rent_days; //租借天数 计算
@@ -23,16 +25,17 @@ const orderController = {
         let car_id = req.body.car_id //车型ID
         let cost_total = req.body.cost_total; //前端计算好返回后端
         // console.log(order_number, order_state, order_date, sat_at, end_at, rent_days, name, phone, car_id, cost_total)
-        // if (!order_number || !order_state || !order_date ||
-        //     !sat_at || !end_at || !rent_days || !name ||
-        //     !phone ||  !car_id || !cost_total) {
-        //     res.json({ code: 0, message: '缺少必要参数' });
-        //     return
-        // }
+        if (!order_number || !order_state || !order_date ||
+            !sat_at || !end_at || !rent_days || !name ||
+            !phone || !car_id || !cost_total) {
+            res.json({ code: 0, message: '缺少必要参数' });
+            return
+        }
 
-        let state = 1; //改变车辆状态
-        let id = car_id; //被改变车辆的ID
-        await Vehicle.update(id, { state })
+        // let state = 1; //改变车辆状态
+        // let id = car_id; //被改变车辆的ID
+        // console.log(id)
+        // await Vehicle.update(id, { state })
 
         try {
 
@@ -50,9 +53,22 @@ const orderController = {
                 cost_total,
             });
             let id = order[0];
+            let user = await User.insert({
+                name,
+                phone,
+                created_time,
+            });
+            let user_id = user[0];
+            if (user_id) {
+                let state = 1; //改变车辆状态
+                let id = car_id; //被改变车辆的ID
+                // console.log(id)
+                await Vehicle.update(id, { state })
+            }
             res.json({
                 code: 200,
-                data: { id }
+                data: { id },
+                user_id: user_id,
             })
         } catch (e) {
             console.log(e)
@@ -135,6 +151,7 @@ const orderController = {
         let id = req.params.id;
         let order_state = req.body.order_state;
         let order_date = new Date();
+        let created_time = order_date;
         let sat_at = req.body.sat_at;
         let end_at = req.body.end_at;
         let rent_days = req.body.rent_days; //前端 计算
@@ -160,6 +177,11 @@ const orderController = {
                 phone,
                 car_id,
                 cost_total,
+            });
+            await User.update({
+                name,
+                phone,
+                created_time,
             });
             res.json({
                 code: 200,

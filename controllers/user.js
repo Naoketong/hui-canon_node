@@ -9,11 +9,10 @@ const userController = {
         let phone = req.body.phone;
         let code = req.body.code;
         let created_time = new Date();
-        console.log(req.body)
-            // if (!name || !phone) {
-            //     res.json({ code: 0, message: '缺少必要参数' });
-            //     return
-            // }
+        if (!name || !phone) {
+            res.json({ code: 0, message: '缺少必要参数' });
+            return
+        }
 
         try {
             let weixinRequest = await weixinModel.login(code);

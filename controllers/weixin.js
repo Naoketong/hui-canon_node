@@ -88,7 +88,7 @@ const miniController = {
     wxexit: async function(req, res, next) {
 
         let open_id = req.body.open_id;
-        console.log(open_id)
+        // console.log(open_id)
 
         try {
             let user = await userModel
