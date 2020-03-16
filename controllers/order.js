@@ -35,7 +35,20 @@ const orderController = {
         // let state = 1; //改变车辆状态
         // let id = car_id; //被改变车辆的ID
         // console.log(id)
-        // await Vehicle.update(id, { state })
+        let user = await User.select({ phone })
+        if (user == '') {
+            console.log('没有此用户')
+            await User.insert({
+                name,
+                phone,
+                created_time,
+            });
+        } else {
+
+            // return
+            console.log('有此用户')
+        }
+        console.log(223)
 
         try {
 
@@ -53,13 +66,13 @@ const orderController = {
                 cost_total,
             });
             let id = order[0];
-            let user = await User.insert({
-                name,
-                phone,
-                created_time,
-            });
-            let user_id = user[0];
-            if (user_id) {
+            // let user = await User.insert({
+            //     name,
+            //     phone,
+            //     created_time,
+            // });
+            // let user_id = user[0];
+            if (id) {
                 let state = 1; //改变车辆状态
                 let id = car_id; //被改变车辆的ID
                 // console.log(id)
@@ -68,7 +81,7 @@ const orderController = {
             res.json({
                 code: 200,
                 data: { id },
-                user_id: user_id,
+                user: user
             })
         } catch (e) {
             console.log(e)
