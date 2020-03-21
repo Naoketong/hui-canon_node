@@ -7,6 +7,7 @@ const userController = {
     insert: async function(req, res, next) {
         let name = req.body.name;
         let phone = req.body.phone;
+        let is_online = req.body.is_online;
         let code = req.body.code;
         let created_time = new Date();
         if (!name || !phone) {
@@ -22,6 +23,7 @@ const userController = {
                 name,
                 phone,
                 open_id,
+                is_online,
                 created_time,
             });
             let id = user[0];
@@ -43,19 +45,19 @@ const userController = {
     },
     list: async function(req, res, next) {
         try {
-            let open_id = ''
+            // let open_id = ''
+            // let is_online = ''
 
-            const userNo_openid = await User.allManager().whereNull('open_id');
-            const userON_open = await User.allManager().whereNotNull(' open_id ');
+            // const userNo_openid = await User.allManager().whereNull('open_id');
+            // const userON_open = await User.allManager().whereNotNull(' open_id ');
             // const usersDisplay = users.map((data) => {
-            //     data.created_time_display = formatTime(data.created_time);
-            //     return data
-            // });
+            const userOnline = await User.select({ is_online: 1 });
+            const userOffline = await User.select({ is_online: 2 });
             res.json({
                 code: 200,
                 data: {
-                    userON_open: userON_open,
-                    userNo_openid: userNo_openid,
+                    userOnline: userOnline,
+                    userOffline: userOffline,
                 },
             })
         } catch (e) {
