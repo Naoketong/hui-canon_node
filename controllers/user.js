@@ -119,7 +119,7 @@ const userController = {
     personal: async function(req, res, next) {
         let id = req.params.id;
         let user_id = id;
-        console.log(id, user_id)
+        // console.log(id, user_id)
         try {
             const user = await User.update(id, { user_id })
             const users = await User

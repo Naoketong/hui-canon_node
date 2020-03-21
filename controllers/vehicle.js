@@ -105,9 +105,9 @@ const vehicleController = {
             let vehicleFree = await Vehicle.allManager().where({ state }) //能租的车型
             res.json({
                 code: 200,
-                vehicleFree: vehicleFree,
                 data: {
                     datas: vehiclesDisplay,
+                    vehicleFree: vehicleFree,
                     pagination: {
                         total: total,
                         current_page: currentPage,
