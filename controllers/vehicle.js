@@ -208,14 +208,18 @@ const vehicleController = {
         let state = 0;
         console.log(state)
         try {
-            const vehicles = await Vehicle.select({ level, state })
+            const vehicles = await Vehicle.select({ level, state }) //空闲车型
+            const vehiclesVue = await Vehicle.select({ level }) //所有车型
             const vehiclesDisplay = vehicles.map((data) => {
                 data.created_time_display = formatTime(data.created_time);
                 return data
             });
             res.json({
                 code: 200,
-                data: vehiclesDisplay
+                data: {
+                    datas: vehiclesDisplay,
+                    vehicle: vehiclesVue,
+                }
             })
         } catch (e) {
             console.log(e)

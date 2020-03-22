@@ -299,7 +299,7 @@ const orderController = {
                     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
                     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name', 'order.car_id',
                     'order.phone', 'order.cost_total', 'get_car',
-                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
+                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level', 'vehicle.car_displacement', 'vehicle.car_structure'
                 )
             let orders = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
