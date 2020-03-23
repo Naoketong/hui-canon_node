@@ -44,7 +44,7 @@ const costController = {
                 .column(
                     'cost.id', 'cost.cost_basis', 'cost.car_id',
                     'cost.cost_servic', 'cost.cost_insurance', 'cost.cost_total',
-                    'vehicle.car_name', 'vehicle.car_img'
+                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price'
                 )
             res.json({
                 code: 200,

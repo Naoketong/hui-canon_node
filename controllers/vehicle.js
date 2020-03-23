@@ -166,12 +166,20 @@ const vehicleController = {
 
     delete: async function(req, res, next) {
         let id = req.params.id;
+        let car_id = id;
         let isdeleted = 1;
+        console.log(car_id)
         try {
-            const manager = await Vehicle.update(id, { isdeleted })
+            let vehicle = await Vehicle.update(id, { isdeleted })
+            if (vehicle) {
+                let cost = await Cost.select({ car_id })
+                let id = cost[0].id
+                await Cost.update(id, { isdeleted })
+            }
+
             res.json({
                 code: 200,
-                data: '删除成功'
+                data: '删除成功',
             })
         } catch (err) {
             console.log(err)
