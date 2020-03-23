@@ -36,11 +36,14 @@ const orderController = {
         // let id = car_id; //被改变车辆的ID
         // console.log(id)
         let user = await User.select({ phone })
+        console.log(user, 'user测试')
         if (user == '') {
             console.log('没有此用户')
+            let is_online = 2;
             await User.insert({
                 name,
                 phone,
+                is_online,
                 created_time,
             });
         } else {
@@ -48,9 +51,9 @@ const orderController = {
             // return
             console.log('有此用户')
         }
-        console.log(223)
 
         try {
+
 
             const order = await Order.insert({
                 order_number,
