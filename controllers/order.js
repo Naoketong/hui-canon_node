@@ -271,9 +271,10 @@ const orderController = {
                 .column(
                     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
                     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name', 'order.car_id',
-                    'order.phone', 'order.cost_total', 'get_car',
+                    'order.phone', 'order.cost_total', 'order.get_car',
                     'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
                 )
+                .orderBy('id', 'desc');
             let orders = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
                 return data
@@ -334,9 +335,10 @@ const orderController = {
                 .column(
                     'order.id', 'order.order_number', 'order.order_state', 'order.order_date',
                     'order.sat_at', 'order.end_at', 'order.rent_days', 'order.name',
-                    'order.phone',
+                    'order.phone', 'order.get_car',
                     'vehicle.car_name', 'vehicle.car_img'
                 )
+                .orderBy('id', 'desc');
             let orders = order.map((data) => {
                 data.order_date = formatTime(data.order_date);
                 return data

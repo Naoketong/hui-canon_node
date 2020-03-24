@@ -121,7 +121,6 @@ const userController = {
     personal: async function(req, res, next) {
         let id = req.params.id;
         let user_id = id;
-        // console.log(id, user_id)
         try {
             const user = await User.update(id, { user_id })
             const users = await User
@@ -134,8 +133,6 @@ const userController = {
                     'order.phone', 'order.cost_total', 'get_car',
                     'vehicle.car_name', 'vehicle.car_img', 'vehicle.price', 'vehicle.level'
                 )
-                // .column('vehicle.id', 'vehicle.name', 'vehicle.state', 'vehicle.car_img')
-
             res.json({
                 code: 200,
                 data: users
