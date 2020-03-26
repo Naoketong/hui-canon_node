@@ -95,12 +95,15 @@ const orderController = {
         }
     },
     list: async function(req, res, next) {
-        let pageSize = req.query.page_size || 10;
-        let currentPage = req.query.current_page || 1;
+        let currentPage = req.body.current_page || 10;
+        let pageSize = req.query.page_size || 1;
+
+        console.log(currentPage, pageSize, '4564')
         let params = {};
+        let order_state = req.body.order_state;
+        console.log(order_state, 'order_state')
         try {
             const order = await Order
-                // .allManager();
                 .pagination(pageSize, currentPage, params)
                 .orderBy('id', 'desc');
             const orderDisplay = order.map((data) => {
@@ -110,10 +113,28 @@ const orderController = {
             let orderCount = await Order.count(params);
 
             let total = orderCount[0].total;
+            console.log(total, 'total')
+            let orderState = await Order
+                .pagination(pageSize, currentPage, params)
+                .where({ order_state })
+                .orderBy('id', 'desc');
+            // console.log(orderState, 'orderState数量')
+            // let orderStateCount = await Order.count(params);
+            let orderState_arr = await Order.select({ order_state })
+            let orderState_total = orderState_arr.length;
+
             res.json({
                 code: 200,
                 data: {
                     datas: orderDisplay,
+                    datasi: {
+                        order_state: orderState,
+                        orderState_pagination: {
+                            total: orderState_total,
+                            current_page: currentPage,
+                            page_size: pageSize,
+                        }
+                    },
                     pagination: {
                         total: total,
                         current_page: currentPage,
