@@ -41,8 +41,9 @@ router.get('/cost/:id', costController.personal);
 router.put('/cost/:id', costController.update);
 router.delete('/cost/:id', costController.delete);
 
-router.post('/order', orderController.list);
+router.get('/order', orderController.list);
 router.post('/order', orderController.insert);
+router.get('/order/state', orderController.state);
 router.get('/order/find/:id', orderController.find);
 router.get('/order/phone/:id', orderController.phone);
 

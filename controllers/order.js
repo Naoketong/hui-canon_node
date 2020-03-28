@@ -34,7 +34,6 @@ const orderController = {
 
         // let state = 1; //改变车辆状态
         // let id = car_id; //被改变车辆的ID
-        // console.log(id)
         let user = await User.select({ phone })
         console.log(user, 'user测试')
         if (user == '') {
@@ -48,7 +47,6 @@ const orderController = {
             });
         } else {
 
-            // return
             console.log('有此用户')
         }
 
@@ -69,16 +67,10 @@ const orderController = {
                 cost_total,
             });
             let id = order[0];
-            // let user = await User.insert({
-            //     name,
-            //     phone,
-            //     created_time,
-            // });
-            // let user_id = user[0];
+
             if (id) {
                 let state = 1; //改变车辆状态
                 let id = car_id; //被改变车辆的ID
-                // console.log(id)
                 await Vehicle.update(id, { state })
             }
             res.json({
@@ -95,13 +87,11 @@ const orderController = {
         }
     },
     list: async function(req, res, next) {
-        let currentPage = req.body.current_page || 10;
-        let pageSize = req.query.page_size || 1;
+        let currentPage = req.query.current_page || 1;
+        let pageSize = req.query.page_size || 10;
 
-        console.log(currentPage, pageSize, '4564')
         let params = {};
-        let order_state = req.body.order_state;
-        console.log(order_state, 'order_state')
+
         try {
             const order = await Order
                 .pagination(pageSize, currentPage, params)
@@ -113,28 +103,27 @@ const orderController = {
             let orderCount = await Order.count(params);
 
             let total = orderCount[0].total;
-            console.log(total, 'total')
-            let orderState = await Order
-                .pagination(pageSize, currentPage, params)
-                .where({ order_state })
-                .orderBy('id', 'desc');
+            // let orderState = await Order
+            //     .pagination(pageSize, currentPage, params)
+            //     .where({ order_state })
+            //     .orderBy('id', 'desc');
             // console.log(orderState, 'orderState数量')
             // let orderStateCount = await Order.count(params);
-            let orderState_arr = await Order.select({ order_state })
-            let orderState_total = orderState_arr.length;
+            // let orderState_arr = await Order.select({ order_state })
+            // let orderState_total = orderState_arr.length;
 
             res.json({
                 code: 200,
                 data: {
                     datas: orderDisplay,
-                    datasi: {
-                        order_state: orderState,
-                        orderState_pagination: {
-                            total: orderState_total,
-                            current_page: currentPage,
-                            page_size: pageSize,
-                        }
-                    },
+                    // datasi: {
+                    //     order_state: orderState,
+                    //     orderState_pagination: {
+                    //         total: orderState_total,
+                    //         current_page: currentPage,
+                    //         page_size: pageSize,
+                    //     }
+                    // },
                     pagination: {
                         total: total,
                         current_page: currentPage,
@@ -150,40 +139,78 @@ const orderController = {
             })
         }
     },
-    show: async function(req, res, next) {
-        let name = req.query.name;
-        let phone = req.query.phone;
-        let pageSize = req.query.page_size || 20;
+    state: async function(req, res, next) {
+        let order_state = req.query.order_state;
         let currentPage = req.query.current_page || 1;
+        let pageSize = req.query.page_size || 2;
+
         let params = {};
-        if (name) params.name = name;
-        if (phone) params.phone = phone;
         try {
-            let users = await UserModel
+            let orderState = await Order
                 .pagination(pageSize, currentPage, params)
+                .where({ order_state })
                 .orderBy('id', 'desc');
-            let usersCount = await UserModel.count(params);
-            // users.forEach(data=>{
-            // 	data.birthday = formatDate(data.birthday)
-            // })
-            let total = usersCount[0].total;
+
+            let orderState_arr = await Order.select({ order_state })
+            let orderState_total = orderState_arr.length;
+
             res.json({
                 code: 200,
-                messsage: '获取成功',
                 data: {
-                    datas: users,
-                    pagination: {
-                        total: total,
-                        current_page: currentPage,
-                        page_size: pageSize,
-                    }
+                    datas: {
+                        order_state: orderState,
+                        orderState_pagination: {
+                            total: orderState_total,
+                            current_page: currentPage,
+                            page_size: pageSize,
+                        }
+                    },
+
                 }
             })
-        } catch (err) {
-            console.log(err)
-            res.json({ code: 0, messsage: '服务器错误' });
+        } catch (e) {
+            console.log(e)
+            res.json({
+                code: 0,
+                message: '内部错误'
+            })
         }
+
     },
+    // show: async function(req, res, next) {
+    //     let name = req.query.name;
+    //     let phone = req.query.phone;
+    //     let pageSize = req.query.page_size || 20;
+    //     let currentPage = req.query.current_page || 1;
+    //     let params = {};
+    //     if (name) params.name = name;
+    //     if (phone) params.phone = phone;
+    //     try {
+    //         let users = await UserModel
+    //             .pagination(pageSize, currentPage, params)
+    //             .orderBy('id', 'desc');
+    //         let usersCount = await UserModel.count(params);
+    //         // users.forEach(data=>{
+    //         // 	data.birthday = formatDate(data.birthday)
+    //         // })
+    //         let total = usersCount[0].total;
+    //         res.json({
+    //             code: 200,
+    //             messsage: '获取成功',
+    //             data: {
+    //                 datas: users,
+    //                 pagination: {
+    //                     total: total,
+    //                     current_page: currentPage,
+    //                     page_size: pageSize,
+    //                 }
+    //             }
+    //         })
+    //     } catch (err) {
+    //         console.log(err)
+    //         res.json({ code: 0, messsage: '服务器错误' });
+    //     }
+    // },
     update: async function(req, res, next) {
         let id = req.params.id;
         let order_state = req.body.order_state;
@@ -251,17 +278,12 @@ const orderController = {
         }
     },
     modify: async function(req, res, next) {
-        // console.log(576)
         let order_number = req.params.id;
         let order_state = req.body.order_state;
         let get_car = req.body.get_car;
         let id = req.body.car_id;
         let state = 0; //改变车辆状态
-        console.log(order_state, id, '44')
-
-
         try {
-
             await Order.modify(order_number, { order_state, get_car })
             if (order_state == '2') {
                 await Vehicle.update(id, { state })
@@ -315,7 +337,7 @@ const orderController = {
     },
     find: async function(req, res, next) {
         let order_number = req.params.id;
-        console.log(order_number, '订单号')
+        // console.log(order_number, '订单号')
         try {
             const order = await Order
                 .select({ order_number })
