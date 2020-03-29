@@ -101,29 +101,11 @@ const orderController = {
                 return data
             });
             let orderCount = await Order.count(params);
-
             let total = orderCount[0].total;
-            // let orderState = await Order
-            //     .pagination(pageSize, currentPage, params)
-            //     .where({ order_state })
-            //     .orderBy('id', 'desc');
-            // console.log(orderState, 'orderState数量')
-            // let orderStateCount = await Order.count(params);
-            // let orderState_arr = await Order.select({ order_state })
-            // let orderState_total = orderState_arr.length;
-
             res.json({
                 code: 200,
                 data: {
                     datas: orderDisplay,
-                    // datasi: {
-                    //     order_state: orderState,
-                    //     orderState_pagination: {
-                    //         total: orderState_total,
-                    //         current_page: currentPage,
-                    //         page_size: pageSize,
-                    //     }
-                    // },
                     pagination: {
                         total: total,
                         current_page: currentPage,
@@ -177,40 +159,6 @@ const orderController = {
         }
 
     },
-    // show: async function(req, res, next) {
-    //     let name = req.query.name;
-    //     let phone = req.query.phone;
-    //     let pageSize = req.query.page_size || 20;
-    //     let currentPage = req.query.current_page || 1;
-    //     let params = {};
-    //     if (name) params.name = name;
-    //     if (phone) params.phone = phone;
-    //     try {
-    //         let users = await UserModel
-    //             .pagination(pageSize, currentPage, params)
-    //             .orderBy('id', 'desc');
-    //         let usersCount = await UserModel.count(params);
-    //         // users.forEach(data=>{
-    //         // 	data.birthday = formatDate(data.birthday)
-    //         // })
-    //         let total = usersCount[0].total;
-    //         res.json({
-    //             code: 200,
-    //             messsage: '获取成功',
-    //             data: {
-    //                 datas: users,
-    //                 pagination: {
-    //                     total: total,
-    //                     current_page: currentPage,
-    //                     page_size: pageSize,
-    //                 }
-    //             }
-    //         })
-    //     } catch (err) {
-    //         console.log(err)
-    //         res.json({ code: 0, messsage: '服务器错误' });
-    //     }
-    // },
     update: async function(req, res, next) {
         let id = req.params.id;
         let order_state = req.body.order_state;
@@ -368,8 +316,7 @@ const orderController = {
     },
     phone: async function(req, res, next) {
         let phone = req.params.id;
-        console.log(phone)
-            // console.log(phone, '订单号')
+
         try {
             const order = await Order
                 .select({ phone })

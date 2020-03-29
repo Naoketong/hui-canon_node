@@ -36,19 +36,33 @@ const costController = {
         }
     },
     list: async function(req, res, next) {
+        let currentPage = req.query.current_page || 1;
+        let pageSize = req.query.page_size || 10;
+        let params = {};
         try {
             const cost = await Cost
-                .all()
+                // 
+                // .all()
+                .paging(pageSize, currentPage, params)
                 .whereNull('cost.isdeleted')
                 .leftJoin('vehicle', 'cost.car_id', 'vehicle.id')
-                .column(
-                    'cost.id', 'cost.cost_basis', 'cost.car_id',
-                    'cost.cost_servic', 'cost.cost_insurance', 'cost.cost_total',
-                    'vehicle.car_name', 'vehicle.car_img', 'vehicle.price'
-                )
+
+            .column(
+                'cost.id', 'cost.cost_basis', 'cost.car_id',
+                'cost.cost_servic', 'cost.cost_insurance', 'cost.cost_total',
+                'vehicle.car_name', 'vehicle.car_img', 'vehicle.price'
+            )
+
+            let costCount = await Cost.count(params);
+            let total = costCount[0].total;
             res.json({
                 code: 200,
-                data: cost
+                data: cost,
+                pagination: {
+                    total: total,
+                    current_page: currentPage,
+                    page_size: pageSize,
+                }
             })
         } catch (e) {
             console.log(e)

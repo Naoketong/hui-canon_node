@@ -72,6 +72,11 @@ class Base {
                 .select()
         }
     }
+    paging(pageSize = 20, currentPage = 1, params = {}) {
+        let offset = (currentPage - 1) * pageSize;
+        return knex(this.table).where(params).offset(offset).limit(pageSize).select()
+    }
+
 
 }
 
