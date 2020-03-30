@@ -73,7 +73,6 @@ const vehicleController = {
                 cost_insurance,
                 cost_total
             });
-            console.log(cost)
             let id = cost[0];
             res.json({
                 code: 200,
@@ -101,7 +100,7 @@ const vehicleController = {
             });
             let vehicleCount = await Vehicle.count(params);
             let total = vehicleCount[0].total;
-            let state = 0;
+            let state = 1;
             let vehicleFree = await Vehicle.allManager().where({ state }) //能租的车型
             res.json({
                 code: 200,
@@ -168,7 +167,6 @@ const vehicleController = {
         let id = req.params.id;
         let car_id = id;
         let isdeleted = 1;
-        console.log(car_id)
         try {
             let vehicle = await Vehicle.update(id, { isdeleted })
             if (vehicle) {
@@ -190,9 +188,7 @@ const vehicleController = {
         }
     },
     personal: async function(req, res, next) {
-
         let id = req.params.id;
-        console.log(id)
         try {
             const vehicles = await Vehicle.allManager().where({ id });
             const vehiclesDisplay = vehicles.map((data) => {
@@ -213,8 +209,7 @@ const vehicleController = {
     },
     level: async function(req, res, next) {
         let level = req.body.level;
-        let state = 0;
-        console.log(state)
+        let state = 1;
         try {
             const vehicles = await Vehicle.select({ level, state }) //空闲车型
             const vehiclesVue = await Vehicle.select({ level }) //所有车型

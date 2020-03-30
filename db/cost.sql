@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 24/03/2020 15:19:15
+ Date: 29/03/2020 21:35:01
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `cost` (
   `cost_total` varchar(255) DEFAULT NULL COMMENT '除租赁费以外总费用',
   `isdeleted` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of cost
@@ -47,6 +47,10 @@ INSERT INTO `cost` VALUES (24, 33, '50', '50', '50', '150', NULL);
 INSERT INTO `cost` VALUES (25, 34, '80', '80', '80', '240', NULL);
 INSERT INTO `cost` VALUES (26, 35, '60', '60', '60', '180', NULL);
 INSERT INTO `cost` VALUES (27, 36, '50', '50', '50', '150', NULL);
+INSERT INTO `cost` VALUES (28, 37, '50', '50', '50', '150', NULL);
+INSERT INTO `cost` VALUES (29, 38, '100', '100', '100', '300', NULL);
+INSERT INTO `cost` VALUES (30, 39, '80', '80', '80', '240', NULL);
+INSERT INTO `cost` VALUES (31, 40, '80', '80', '80', '240', NULL);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

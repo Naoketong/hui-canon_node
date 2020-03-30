@@ -4,15 +4,12 @@ const userController = {
     login: async function(req, res, next) {
         try {
             let ttt = req.cookies.ac;
-            console.log(req);
             let phone = req.body.phone;
             let password = req.body.password;
             let decide = await Admin_user.select({ phone: phone, password: password });
-            console.log(decide, 'qqq');
             if (decide[0].id == null) {
                 throw new Error('无此用户');
             }
-            // console.log(authCodeFunc);
             let id = decide[0].id + '/tmp' + password;
             let auth_Code = authCodeFunc(id, 'ENCODE');
             res.cookie('ac', auth_Code, { maxAge: 24 * 60 * 60 * 1000 });

@@ -3,9 +3,6 @@ const authCode = require('./../utils/authCode.js');
 const axios = require('axios');
 const userModel = require('./../models/user.js');
 var { formatDate, formatMin } = require('./../utils/date.js');
-
-
-
 const miniController = {
     wxbind: async function(req, res, next) {
         const code = req.body.code;
@@ -20,10 +17,7 @@ const miniController = {
         try {
             let weixinRequest = await weixinModel.login(code);
             let weixinData = weixinRequest.data;
-            console.log(weixinData)
             let open_id = weixinData.openid;
-            // console.log(open_id, 'open_id')
-
             let userInfo = await userModel.show({ name, phone });
             userInfo = userInfo[0] || {};
 
@@ -46,7 +40,6 @@ const miniController = {
                 success: '绑定成功'
             });
         } catch (err) {
-            console.log(err)
             res.json({ code: 0, message: '绑定失败啊' })
         }
     },
@@ -61,10 +54,8 @@ const miniController = {
             let weixinRequest = await weixinModel.login(code);
             let weixinData = weixinRequest.data;
             let open_id = weixinData.openid;
-            console.log(open_id, '222')
 
             let userInfo = await userModel.show({ open_id });
-            console.log(userInfo)
             userInfo = userInfo[0] || {};
 
             if (!userInfo.id) {
@@ -88,7 +79,6 @@ const miniController = {
     wxexit: async function(req, res, next) {
 
         let open_id = req.body.open_id;
-        // console.log(open_id)
 
         try {
             let user = await userModel

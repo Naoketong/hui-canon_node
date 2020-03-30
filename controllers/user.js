@@ -1,7 +1,6 @@
 const weixinModel = require('./../models/wexin.js');
 const authCode = require('./../utils/authCode.js');
 const User = require('./../models/user.js');
-const vehicle = require('./../models/vehicle.js');
 const { formatTime } = require('./../utils/date.js');
 const userController = {
     insert: async function(req, res, next) {
@@ -45,12 +44,8 @@ const userController = {
     },
     list: async function(req, res, next) {
         try {
-            // let open_id = ''
-            // let is_online = ''
-
             // const userNo_openid = await User.allManager().whereNull('open_id');
             // const userON_open = await User.allManager().whereNotNull(' open_id ');
-            // const usersDisplay = users.map((data) => {
             const userOnline = await User.select({ is_online: 1 });
             const userOffline = await User.select({ is_online: 2 });
             res.json({
@@ -121,6 +116,8 @@ const userController = {
     personal: async function(req, res, next) {
         let id = req.params.id;
         let user_id = id;
+        let name = req.body.name;
+        let phone = req.body.phone;
         try {
             const user = await User.update(id, { user_id })
             const users = await User
@@ -135,7 +132,7 @@ const userController = {
                 )
             res.json({
                 code: 200,
-                data: users
+                data: users,
             })
         } catch (e) {
             console.log(e)

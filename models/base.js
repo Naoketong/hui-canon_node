@@ -4,7 +4,9 @@ class Base {
     constructor(props) {
         this.table = props;
     }
-
+    basic() {
+        return knex(this.table)
+    }
     all() {
         return knex(this.table).select()
     }
@@ -22,10 +24,6 @@ class Base {
     allManager() {
         return knex(this.table).select().whereNull('isdeleted')
     }
-
-    // alls() {
-    //     return knex(this.table).where().whereNull('isdeleted').select()
-    // }
 
     insert(params) {
         return knex(this.table).insert(params)

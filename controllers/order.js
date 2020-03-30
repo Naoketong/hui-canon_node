@@ -12,7 +12,6 @@ const orderController = {
         // }
         // order_number = new Date().getTime() + order_number; //时间戳，用来生成订单号。
         let order_number = req.body.order_number
-
         let order_state = 1; //订单状态 1：进行中 2：已完成 3：已取消
         let get_car = 1;
         let order_date = new Date();
@@ -32,10 +31,8 @@ const orderController = {
             return
         }
 
-        // let state = 1; //改变车辆状态
-        // let id = car_id; //被改变车辆的ID
+
         let user = await User.select({ phone })
-        console.log(user, 'user测试')
         if (user == '') {
             console.log('没有此用户')
             let is_online = 2;
@@ -46,13 +43,9 @@ const orderController = {
                 created_time,
             });
         } else {
-
             console.log('有此用户')
         }
-
         try {
-
-
             const order = await Order.insert({
                 order_number,
                 order_state,
@@ -69,7 +62,7 @@ const orderController = {
             let id = order[0];
 
             if (id) {
-                let state = 1; //改变车辆状态
+                let state = 2; //改变车辆状态
                 let id = car_id; //被改变车辆的ID
                 await Vehicle.update(id, { state })
             }
@@ -89,9 +82,7 @@ const orderController = {
     list: async function(req, res, next) {
         let currentPage = req.query.current_page || 1;
         let pageSize = req.query.page_size || 10;
-
         let params = {};
-
         try {
             const order = await Order
                 .pagination(pageSize, currentPage, params)
@@ -125,17 +116,14 @@ const orderController = {
         let order_state = req.query.order_state;
         let currentPage = req.query.current_page || 1;
         let pageSize = req.query.page_size || 2;
-
         let params = {};
         try {
             let orderState = await Order
                 .pagination(pageSize, currentPage, params)
                 .where({ order_state })
                 .orderBy('id', 'desc');
-
             let orderState_arr = await Order.select({ order_state })
             let orderState_total = orderState_arr.length;
-
             res.json({
                 code: 200,
                 data: {
@@ -157,7 +145,6 @@ const orderController = {
                 message: '内部错误'
             })
         }
-
     },
     update: async function(req, res, next) {
         let id = req.params.id;
@@ -173,11 +160,9 @@ const orderController = {
         let cost_total = req.body.cost_total; //前端计算好返回后端
         if (car_id) {
             let id = car_id;
-            let state = 1;
+            let state = 2;
             await Vehicle.update(id, { state })
         }
-
-
         try {
             const order = await Order.update(id, {
                 order_state,
@@ -230,7 +215,7 @@ const orderController = {
         let order_state = req.body.order_state;
         let get_car = req.body.get_car;
         let id = req.body.car_id;
-        let state = 0; //改变车辆状态
+        let state = 1; //改变车辆状态
         try {
             await Order.modify(order_number, { order_state, get_car })
             if (order_state == '2') {
@@ -285,7 +270,6 @@ const orderController = {
     },
     find: async function(req, res, next) {
         let order_number = req.params.id;
-        // console.log(order_number, '订单号')
         try {
             const order = await Order
                 .select({ order_number })
@@ -316,7 +300,6 @@ const orderController = {
     },
     phone: async function(req, res, next) {
         let phone = req.params.id;
-
         try {
             const order = await Order
                 .select({ phone })
@@ -333,7 +316,6 @@ const orderController = {
                 data.order_date = formatTime(data.order_date);
                 return data
             });
-
             res.json({
                 code: 200,
                 data: orders,

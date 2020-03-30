@@ -18,7 +18,6 @@ const costController = {
                 cost_insurance,
                 cost_total
             });
-            console.log(cost)
             let id = cost[0];
 
 
@@ -41,8 +40,6 @@ const costController = {
         let params = {};
         try {
             const cost = await Cost
-                // 
-                // .all()
                 .paging(pageSize, currentPage, params)
                 .whereNull('cost.isdeleted')
                 .leftJoin('vehicle', 'cost.car_id', 'vehicle.id')
@@ -79,12 +76,11 @@ const costController = {
         let cost_lease = req.body.cost_lease;
         let cost_servic = req.body.cost_servic;
         let cost_insurance = req.body.cost_insurance;
-        let cost_total = Number(cost_basis) + /*Number(cost_lease) +*/ Number(cost_servic) + Number(cost_insurance)
+        let cost_total = Number(cost_basis) + Number(cost_servic) + Number(cost_insurance)
         try {
             const cost = await Cost.update(id, {
                 car_id,
                 cost_basis,
-                // cost_lease,
                 cost_servic,
                 cost_insurance,
                 cost_total
@@ -121,7 +117,6 @@ const costController = {
     },
     personal: async function(req, res, next) {
         let car_id = req.params.id;
-        // let car_id = id;
         try {
             const cost = await Cost.select({ car_id })
 
