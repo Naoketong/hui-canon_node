@@ -1,15 +1,15 @@
 const configs = {
-    mysql: {
-        host: '',
-        port: '',
-        user: '',
-        password: '',
-        database: ''
-    },
-    qiniu: {
-        accessKey: '',
-        secretKey: ''
-    },
+	mysql: {
+		host: '',
+		port: '',
+		user: '',
+		password: '',
+		database: ''
+	},
+	qiniu: {
+		accessKey: '',
+		secretKey: ''
+	},
 }
 
 module.exports = configss
