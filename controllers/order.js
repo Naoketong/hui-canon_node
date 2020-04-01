@@ -123,7 +123,10 @@ const orderController = {
 				.orderBy('id', 'desc');
 			let orderState_arr = await Order.select({ order_state })
 			let orderState_total = orderState_arr.length;
-			let state_all = await Order.select({order_state})
+			let state_all = await Order
+			.select({order_state})
+			.whereNull('order.isdeleted')
+			.leftJoin('vehicle','order.car_id','vehicle.id')
 			res.json({
 				code: 200,
 				data: {
