@@ -5,13 +5,11 @@ class Base {
 		this.table = props;
 	}
 	basic() {
-			
 		return knex(this.table)
 	}
 	all() {
 		return knex(this.table).select()
 	}
-
 	select(params) {
 		return knex(this.table).select().where(params)
 	}
@@ -21,22 +19,18 @@ class Base {
 	where(params) {
 		return knex(this.table).where(params);
 	}
-
 	allManager() {
 		return knex(this.table).select().whereNull('isdeleted')
 	}
-
 	insert(params) {
 		return knex(this.table).insert(params)
 	}
-
 	update(id, params) {
 		return knex(this.table).where('id', '=', id).update(params)
 	}
 	modify(order_number, params) { //修改订单
 		return knex(this.table).where('order_number', '=', order_number).update(params)
 	}
-
 	delete(id) {
 		return knex(this.table).where('id', '=', id).del()
 	}
@@ -49,8 +43,6 @@ class Base {
 			return knex(this.table).where(params).count('id as total');
 		}
 	}
-
-
 	pagination(pageSize = 20, currentPage = 1, params = {}, dateFilter = {}) {
 		let offset = (currentPage - 1) * pageSize;
 		if (dateFilter.column) {

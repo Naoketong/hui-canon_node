@@ -55,7 +55,6 @@ router.delete('/order/:id', orderController.delete);
 
 //小程序
 router.post('/miniprogram/wxbind', weixinController.wxbind);
-
 router.post('/miniprogram/wxlogin', weixinController.wxlogin);
 router.post('/miniprogram/wxexit', weixinController.wxexit);
 
