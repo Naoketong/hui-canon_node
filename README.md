@@ -25,15 +25,15 @@
 * 设计稿
 
 ![图片](http://qaioks931.bkt.clouddn.com/hui-canon/1589788380133_%E4%BF%9D%E6%97%B6%E6%8D%B7panamera.jpeg)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/02.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/03.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/04.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/05.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/06.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/07.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/08.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/09.png)
-![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/img/10.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/02.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/03.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/04.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/05.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/06.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/07.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/08.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/09.png)
+![图片](https://github.com/Naoketong/hui-canon_node/tree/master/img/10.png)
 * 产品流程图 (无)
 
 ## 2-项目剖析页
