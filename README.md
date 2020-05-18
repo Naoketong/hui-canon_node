@@ -25,15 +25,15 @@
 * 设计稿
 
 ![图片](http://qaioks931.bkt.clouddn.com/hui-canon/1589788380133_%E4%BF%9D%E6%97%B6%E6%8D%B7panamera.jpeg)
-![图片](./img/02.png)
-![图片](./img/03.png)
-![图片](./img/04.png)
-![图片](./img/05.png)
-![图片](./img/06.png)
-![图片](./img/07.png)
-![图片](./img/08.png)
-![图片](./img/09.png)
-![图片](./img/10.png)
+![图片](img/02.png)
+![图片](img/03.png)
+![图片](img/04.png)
+![图片](img/05.png)
+![图片](img/06.png)
+![图片](img/07.png)
+![图片](img/08.png)
+![图片](img/09.png)
+![图片](img/10.png)
 * 产品流程图 (无)
 
 ## 2-项目剖析页
