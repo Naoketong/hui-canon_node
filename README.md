@@ -24,7 +24,7 @@
 ### 1.5 - 配套资料
 * 设计稿
 
-![alt text]('http://q78bt83b2.bkt.clouddn.com/hui-canon/1585313713807_丰田雷凌.jpg')
+![图片](http://qaioks931.bkt.clouddn.com/hui-canon/1589788380133_%E4%BF%9D%E6%97%B6%E6%8D%B7panamera.jpeg)
 ![图片](./img/02.png)
 ![图片](./img/03.png)
 ![图片](./img/04.png)
